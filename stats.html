@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Privoxy Log Stats</title>
+  <script src="js/chart.min.js"></script>
+  <style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #121212; color: #e0e0e0; margin: 20px; }
+    h1 { text-align: center; color: #00bcd4; }
+    h2 { margin-top: 40px; color: #00bcd4; }
+    .chart-container { width: 90%; max-width: 900px; margin: 30px auto; background: #1e1e1e; padding: 20px; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.7); }
+    canvas { background: #1e1e1e; border-radius: 10px; }
+  </style>
+</head>
+<body>
+  <h1>Privoxy Log Statistics</h1>
+  <h2>Total Requests: 1169049</h2>
+
+  <h2>Top 20 Client IPs</h2>
+  <div class="chart-container"><canvas id="ipChart"></canvas></div>
+
+  <h2>HTTP Response Codes</h2>
+  <div class="chart-container"><canvas id="codeChart"></canvas></div>
+
+  <h2>Top 20 Requested Hosts</h2>
+  <div class="chart-container"><canvas id="hostChart"></canvas></div>
+
+  <script>
+  const chartOptions = { 
+      responsive: true, 
+      plugins: { legend: { labels: { color: '#e0e0e0' } } }, 
+      scales: { x: { ticks: { color: '#e0e0e0' } }, y: { ticks: { color: '#e0e0e0' } } } 
+  };
+
+  function generateColors(count) {
+      const colors = [];
+      for (let i=0; i<count; i++) {
+          const hue = Math.floor((360 / count) * i);
+          colors.push(`hsl(${hue}, 70%, 50%)`);
+      }
+      return colors;
+  }
+
+  new Chart(document.getElementById('ipChart'), {
+    type: 'bar',
+    data: { labels: ["45.120.177.136 (221909)","173.249.37.120 (74565)","81.29.150.137 (68545)","80.75.212.17 (42418)","45.129.59.45 (37285)","167.253.35.154 (34703)","107.173.18.21 (32751)","168.138.12.156 (32511)","107.173.18.16 (32454)","209.159.152.158 (29635)","62.133.47.132 (26890)","149.102.232.90 (25151)","170.39.194.59 (23346)","46.98.110.57 (22559)","107.173.30.198 (22509)","156.67.82.54 (21325)","107.172.51.197 (20447)","195.181.161.11 (19768)","144.24.174.182 (17070)","104.129.245.26 (16084)"], datasets:[{ label:'Requests', data:[221909,74565,68545,42418,37285,34703,32751,32511,32454,29635,26890,25151,23346,22559,22509,21325,20447,19768,17070,16084], backgroundColor:'rgba(0,188,212,0.7)' }] },
+    options: chartOptions
+  });
+
+  new Chart(document.getElementById('codeChart'), {
+    type: 'pie',
+    data: { labels: ["500","503","0","200","403","400","","502","504","302"], datasets:[{ data:[653471,234294,160639,90851,4772,3819,3664,2010,370,154], backgroundColor: generateColors(["500","503","0","200","403","400","","502","504","302"].length) }] },
+    options: { plugins:{ legend:{ labels:{ color:'#e0e0e0' } } } }
+  });
+
+  new Chart(document.getElementById('hostChart'), {
+    type: 'bar',
+    data: { labels: ["www.instagram.com","15.235.186.137:56123","31.204.162.66","query.cleaning","150.109.25.204:9099","88.151.187.133","31.204.165.60","www.polri.go.id","proza.ru","31.204.167.41","31.204.171.180","i.instagram.com","game.jnrhm.com","88.151.88.171","109.75.134.80","88.151.184.88","79.99.50.187","109.75.134.216","109.75.134.214","88.151.88.55"], datasets:[{ label:'Requests', data:[34426,29175,28622,23592,16084,11208,10409,9713,8961,8954,8881,8065,7907,7450,7348,7036,6489,6170,5984,5306], backgroundColor:'rgba(255,64,129,0.7)' }] },
+    options: chartOptions
+  });
+  </script>
+</body>
+</html>
