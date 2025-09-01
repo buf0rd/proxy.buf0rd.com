@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MONITORED PROXY, NOT for public use— Access Warning</title>
+  <style>
+    :root {
+      --bg: #0b0d12;
+      --panel: #12151c;
+      --panel-2: #171b24;
+      --accent: #d32f2f;
+      --accent-2: #f5c04e;
+      --text: #e7ecf4;
+      --muted: #9aa3b2;
+      --ok: #3fb950;
+      --shadow: 0 20px 50px rgba(0,0,0,.45);
+    }
+    html, body { height: 100%; background: var(--bg); color: var(--text); margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; }
+    .wrap { min-height: 100%; display: grid; place-items: center; padding: 4rem 1rem; }
+    .card { position: relative; max-width: 1000px; width: min(100%, 1000px); background: linear-gradient(180deg, var(--panel), var(--panel-2)); border: 1px solid rgba(255,255,255,.06); border-radius: 18px; box-shadow: var(--shadow); overflow: hidden; }
+    .card::before { content: "MONITORED"; position: absolute; inset: 0; display: grid; place-items: center; font-size: clamp(3.5rem, 10vw, 9rem); letter-spacing: .25rem; font-weight: 800; color: rgba(255,255,255,.02); transform: rotate(-14deg); pointer-events: none; user-select: none; }
+    header { position: relative; padding: 1.1rem 1.25rem; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1rem; background: linear-gradient(90deg, rgba(211,47,47,.15), rgba(245,192,78,.08)); border-bottom: 1px solid rgba(255,255,255,.08); }
+    .seal { width: 56px; height: 56px; display: grid; place-items: center; border-radius: 50%; background: radial-gradient(circle at 30% 30%, rgba(245,192,78,.28), rgba(245,192,78,.08) 60%, transparent 61%), #0f1219; border: 2px solid var(--accent-2); box-shadow: inset 0 0 0 3px rgba(0,0,0,.35); }
+    .seal svg { width: 34px; height: 34px; }
+    .headline { line-height: 1.1; }
+    .headline .kicker { font-size: .85rem; color: var(--muted); text-transform: uppercase; letter-spacing: .16rem; display: block; }
+    .headline h1 { margin: 2px 0 0; font-size: clamp(1.4rem, 2.2vw + .8rem, 2.15rem); }
+    .tag { display: inline-flex; align-items: center; gap: .5rem; padding: .4rem .7rem; border-radius: 999px; border: 1px solid rgba(255,255,255,.12); background: rgba(211,47,47,.12); color: var(--text); font-size: .85rem; font-weight: 700; text-transform: uppercase; letter-spacing: .12rem; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px rgba(211,47,47,.25); }
+    .body { position: relative; padding: 1.25rem; display: grid; gap: 1rem; }
+    .notice { border-left: 4px solid var(--accent); background: rgba(211,47,47,.08); padding: 1rem; border-radius: 10px; }
+    .notice strong { color: #ffd384; }
+    .grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+    @media (min-width: 820px){ .grid { grid-template-columns: 1.15fr .85fr; } }
+    .panel { background: rgba(0,0,0,.25); border: 1px solid rgba(255,255,255,.06); border-radius: 14px; padding: 1rem 1.1rem; }
+    .panel h2 { margin: 0 0 .6rem; font-size: 1.1rem; letter-spacing: .02rem; }
+    .panel p, .panel li { color: #c8d1e0; }
+    ul.check { list-style: none; padding: 0; margin: .4rem 0 0; }
+    ul.check li { margin: .55rem 0; position: relative; padding-left: 1.8rem; }
+    ul.check li::before { content: ""; position: absolute; left: 0; top: .2rem; width: 1.1rem; height: 1.1rem; border-radius: 4px; border: 2px solid rgba(255,255,255,.18); background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.01)); box-shadow: inset 0 0 0 3px rgba(0,0,0,.35); }
+    ul.check li .mark { position: absolute; left: .20rem; top: -.05rem; font-size: 1.4rem; color: var(--ok); }
+    .footer { display: grid; grid-template-columns: 1fr auto; gap: .75rem; align-items: center; padding-top: .6rem; color: var(--muted); font-size: .9rem; }
+    .btnrow { display: flex; flex-wrap: wrap; gap: .6rem; }
+    .btn { cursor: pointer; border: 1px solid rgba(255,255,255,.14); background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); color: var(--text); padding: .6rem .9rem; border-radius: 12px; font-weight: 650; }
+    .btn:hover { background: rgba(255,255,255,.08); }
+    .strip { display: grid; grid-auto-flow: column; gap: .5rem; align-items: center; background: repeating-linear-gradient(45deg, rgba(211,47,47,.25) 0, rgba(211,47,47,.25) 10px, transparent 10px, transparent 20px), rgba(255,255,255,.03); border-top: 1px solid rgba(255,255,255,.06); padding: .7rem 1rem; font-size: .9rem; color: #d9dee8; }
+    .strip strong { color: #fff; }
+    .legal { font-size: .85rem; color: var(--muted); line-height: 1.5; }
+    .muted { color: var(--muted); }
+    code.small { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: .85em; color: #b9c3d6; }
+    .divider { height: 1px; background: linear-gradient(90deg, rgba(255,255,255,.08), rgba(255,255,255,.02)); margin: .6rem 0; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <main class="card" role="main" aria-labelledby="title">
+      <header aria-label="Banner">
+        <div class="seal" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 2l7 3v6c0 5-3.5 9-7 11-3.5-2-7-6-7-11V5l7-3z"/>
+            <path d="M9 11l2 2 4-4"/>
+          </svg>
+        </div>
+        <div class="headline">
+          <span class="kicker">©BRG 2025</span>
+          <h1 id="title">This Proxy Is Under Active Monitoring | For statistics visit: <a href="https://proxy.buf0rd.com/stats.html">proxy.buf0rd.com/stats.html</a></h1>
+        </div>
+        <span class="tag" aria-label="Status: Active Monitoring"><span class="dot"></span> ACTIVE</span>
+      </header>
+
+      <section class="body">
+        <div class="notice" role="alert">
+          <strong>Warning:</strong> All proxy traffic is <em>monitored, captured, and retained</em>. Network activity may be used for <strong>data aggregation</strong>, <strong>security research</strong>, and <strong>threat intelligence</strong> purposes. By continuing, you acknowledge and consent to this monitoring.
+        </div>
+
+        <!-- Total Requests Panel -->
+        <article class="panel" aria-labelledby="totals">
+          <h2 id="totals">Total Requests intitiated without authorization since 8-30-2025 (-aka- Thee 503'd)</h2>
+          <p id="totalRequests" style="font-size:2.2rem; color:#f5c04e; font-weight:700;">Loading...</p>
+        </article>
+
+        <div class="grid">
+          <article class="panel" aria-labelledby="scope">
+            <h2 id="scope">Scope of Monitoring</h2>
+            <p>Activities on this proxy and connected services are subject to inspection and logging by authorized personnel and automated systems. Monitoring includes, but is not limited to, metadata, content, protocol behavior, indicators of compromise, and anonymized analytics.</p>
+            <ul class="check" aria-label="Monitoring elements">
+              <li><span class="mark">✔</span> Full request and response metadata, timing, and headers</li>
+              <li><span class="mark">✔</span> Content hashing, URL and domain intelligence enrichment</li>
+              <li><span class="mark">✔</span> Malware detonation and behavioral analysis (sandboxed)</li>
+              <li><span class="mark">✔</span> Threat indicator extraction and sharing within trusted communities</li>
+              <li><span class="mark">✔</span> Aggregated statistics for research and defensive purposes</li>
+            </ul>
+
+            <div class="divider"></div>
+            <p class="legal"><strong>No expectation of privacy.</strong> Use of this system constitutes <em>express consent</em> to monitoring, interception, recording, and disclosure for any lawful purpose, including operational assurance, incident response, law‑enforcement cooperation, and intelligence production. Unauthorized use may be subject to administrative, civil, and/or criminal penalties.</p>
+          </article>
+
+          <aside class="panel" aria-labelledby="auth">
+            <h2 id="auth">Authorized Use Only</h2>
+            <p>Access is restricted to authorized users and approved testing. If you are not expressly permitted to use this proxy, disconnect now.</p>
+            <ul class="check" aria-label="Conditions of access">
+              <li><span class="mark">✔</span> Continued access = consent to monitoring and data processing</li>
+              <li><span class="mark">✔</span> Activity may be correlated across sessions, devices, and sources</li>
+              <li><span class="mark">✔</span> Aggregated intelligence may be shared with partner organizations</li>
+              <li><span class="mark">✔</span> Abusive, malicious, or nefarious activity will be reported to Law Enforcement.</li>
+              <li><span class="mark">✔</span> Proxy activity IS logged and will be provided to Law Enforcement upon request.</li>
+            </ul>
+
+            <div class="divider"></div>
+            <p><strong>Need help?</strong> Contact the network operations team at <a href="mailto:bufordresearchgroup@gmail.com" class="muted">BufordResearchGroup@gmail.com</a>.</p>
+            <p class="muted">Reference ID: <code class="small" id="rid">JCTG‑PROXY‑</code><span id="ts" class="muted"></span></p>
+          </aside>
+        </div>
+
+        <div class="footer">
+          <p class="legal">This is a private network notice. <strong>Not affiliated with any government agency.</strong> Visual style inspired by public joint task force takedown banners while avoiding official emblems.</p>
+          <div class="btnrow">
+            <button class="btn" onclick="window.location.href='about:blank'" aria-label="Leave page">Leave</button>
+            <button class="btn" onclick="acknowledge()" aria-label="Acknowledge and continue">Acknowledge & Continue</button>
+          </div>
+        </div>
+      </section>
+
+      <div class="strip" role="note" aria-label="Compliance strip">
+        <span>Use of this proxy constitutes consent to monitoring and data processing. Timestamp: <strong id="stamp">—</strong></span>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Generate timestamp and reference ID
+    (function() {
+      const now = new Date();
+      const ts = now.toISOString().replace(/[-:TZ.]/g, '').slice(0, 14);
+      document.getElementById('stamp').textContent = now.toUTCString();
+      document.getElementById('ts').textContent = now.toISOString();
+      const rid = document.getElementById('rid');
+      rid.textContent = rid.textContent + ts;
+    })();
+
+    // Fetch total requests and animate count
+    (function(){
+      fetch('requests.html')
+        .then(res => res.text())
+        .then(data => {
+          const match = data.match(/Total Requests:\s*(\d+)/i);
+          const total = match ? parseInt(match[1],10) : 0;
+          const el = document.getElementById('totalRequests');
+          let current = 0;
+          const step = Math.ceil(total / 100);
+          const interval = setInterval(() => {
+            current += step;
+            if (current >= total) {
+              current = total;
+              clearInterval(interval);
+            }
+            el.textContent = current.toLocaleString();
+          }, 15);
+        })
+        .catch(err => { 
+          console.error('Failed to load total requests:', err);
+          document.getElementById('totalRequests').textContent = 'Error';
+        });
+    })();
+
+    function acknowledge() {
+      const next = (typeof PROXY_CONTINUE_URL !== 'undefined') ? PROXY_CONTINUE_URL : '#';
+      alert('Acknowledgement recorded. Accessing approved destination…');
+      if (next !== '#') window.location.href = next;
+    }
+  </script>
+        <center><p>&copy; 2025 BRG</p><p class="cursive-text">Chicago, IL.</p>
+            <p>"Opinions are our own and do not necessarily reflect those of current employers, previous employers, <b>public</b> offices, <b>private</b> offices, and/or clients."</p></center>
+    </div>
+</body>
+</html>
